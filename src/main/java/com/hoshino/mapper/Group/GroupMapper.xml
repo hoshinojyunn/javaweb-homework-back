@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hoshino.mapper.Group.GroupMapper">
+    <insert id="groupAddUser">
+        insert into java_web.group_inclusion(group_id, user_id,username,group_name)
+        select g.group_id,u.id,u.username,g.group_name from java_web.`group` g,java_web.user u
+        <where>
+            g.group_id=#{groupId} and u.id=#{uid}
+            and not exists(select * from java_web.group_inclusion where group_id=#{groupId} and user_id=#{uid})
+        </where>
+    </insert>
+
+    <select id="getUserGroups" resultType="com.hoshino.pojo.Group">
+        select g.group_id,g.group_name from java_web.group_inclusion g where g.user_id=#{uid};
+    </select>
+
+    <insert id="groupDeleteUser">
+        delete from java_web.group_inclusion where group_id=#{groupId} and user_id=#{uid};
+    </insert>
+
+    <insert id="sendGroupMessage">
+        insert into java_web.group_event(group_id,group_name, event_name, start_time, end_time,event_description)
+        values (#{groupId},(select g.group_name from java_web.`group` g where group_id=#{groupId}),
+                #{eventName},#{startTime},#{endTime},#{eventDescription});
+    </insert>
+
+    <select id="getGroupEvents" resultType="com.hoshino.pojo.GroupEvent">
+        select * from java_web.group_event where group_id=#{groupId};
+    </select>
+</mapper>

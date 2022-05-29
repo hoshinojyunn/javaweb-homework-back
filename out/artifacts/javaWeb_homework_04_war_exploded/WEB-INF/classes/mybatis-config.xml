@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="db.properties"/>
+    <settings>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <typeAliases>
+        <!--        <typeAlias type="pojo.User" alias="user1"/>-->
+        <typeAlias type="com.hoshino.pojo.User" alias="user"/>
+        <typeAlias type="com.hoshino.pojo.UserEvent" alias="userEvent"/>
+    </typeAliases>
+
+    <environments default="test">
+        <environment id="development">
+            <!--事务管理器-->
+            <transactionManager type="JDBC"/>
+            <!--数据源配置-->
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/school?useSSL=true&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;"/>
+                <property name="username" value="root"/>
+                <property name="password" value="123456"/>
+            </dataSource>
+        </environment>
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--每一个Mapper.xml都需要在Mybatis核心配置文件注册-->
+    <mappers>
+        <mapper class="com.hoshino.mapper.User.UserMapper"/>
+        <mapper class="com.hoshino.mapper.UserEvent.UserEventMapper"/>
+        <mapper class="com.hoshino.mapper.UserFriends.UserFriendsMapper"/>
+        <mapper class="com.hoshino.mapper.Group.GroupMapper"/>
+    </mappers>
+
+</configuration>

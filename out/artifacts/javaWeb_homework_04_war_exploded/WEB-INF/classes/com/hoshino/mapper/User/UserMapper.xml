@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hoshino.mapper.User.UserMapper">
+    <resultMap id="userMap" type="com.hoshino.pojo.User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+    </resultMap>
+
+    <select id="getUserById" resultType="com.hoshino.pojo.User">
+        select * from java_web.user where id=#{id};
+    </select>
+    <insert id="addUser" parameterType="com.hoshino.pojo.User">
+        insert into java_web.user (username, password) VALUES (#{username}, #{password});
+    </insert>
+
+    <select id="selectUser" resultMap="userMap">
+        select * from java_web.user where username=#{username};
+    </select>
+
+    <update id="setUserAvatar">
+        update java_web.user_personal_message set avatar_url=#{imgUrl} where user_id=#{userId};
+    </update>
+
+    <select id="getUserAvatar" resultType="string">
+        select upm.avatar_url from java_web.user_personal_message upm where user_id=#{userId};
+    </select>
+
+    <select id="getUserName" resultType="string">
+        select username from java_web.user where username=#{username}
+    </select>
+
+    <insert id="defaultPersonalSettings">
+        insert into java_web.user_personal_message(user_id, avatar_url)
+        VALUES (#{userId},'defaultAvatar.jpg');
+    </insert>
+
+    <update id="resetPassword">
+        update java_web.user set password=#{password} where id=#{userId};
+    </update>
+</mapper>
