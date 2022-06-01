@@ -3,10 +3,12 @@ package com.hoshino.controller;
 
 
 import com.hoshino.pojo.User;
+import com.hoshino.service.loginService.LoginService;
 import com.hoshino.service.loginService.LoginServiceImpl;
 import com.hoshino.util.JsonUtil;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,13 +17,19 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class LoginController {
+    @Autowired
+    private LoginService loginService;
+
+    public void setLoginServiceImpl(LoginService loginServiceImpl) {
+        this.loginService = loginServiceImpl;
+    }
+
     @RequestMapping(value = {"/login"},method = RequestMethod.GET)
     public String loginCheck(HttpServletRequest request,
                              @RequestParam("username")String username,
                              @RequestParam("password")String password) {
 
         HttpSession session = request.getSession();
-        LoginServiceImpl loginService = new LoginServiceImpl();
         // 检查登录信息
         User user = loginService.CheckLoginMessage(username, password);
 
@@ -46,7 +54,6 @@ public class LoginController {
     @GetMapping("/getAvatar")
     public String getAvatar(HttpSession session){
         Integer userId = (Integer) session.getAttribute("userId");
-        LoginServiceImpl loginService = new LoginServiceImpl();
         String userAvatarUrl = loginService.getUserAvatarUrl(userId);
         return JsonUtil.getJson(userAvatarUrl);
     }

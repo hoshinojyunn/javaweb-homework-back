@@ -30,4 +30,8 @@
     <select id="getGroupEvents" resultType="com.hoshino.pojo.GroupEvent">
         select * from java_web.group_event where group_id=#{groupId};
     </select>
+
+    <delete id="deleteGroupEvent">
+        delete from java_web.group_event where group_id=#{groupId} and group_event_id=#{eventId};
+    </delete>
 </mapper>

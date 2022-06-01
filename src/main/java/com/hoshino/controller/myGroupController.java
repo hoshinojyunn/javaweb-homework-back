@@ -3,6 +3,8 @@ package com.hoshino.controller;
 
 import com.hoshino.pojo.Group;
 import com.hoshino.util.JsonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +19,14 @@ import java.util.List;
 
 @RestController
 public class myGroupController {
+    @Autowired
+    @Qualifier("groupServiceImpl")
+    private groupServiceImpl groupService;
     @RequestMapping("/joinGroup")
     public String joinGroup(HttpServletRequest request,
                             @RequestParam("groupId")String groupId){
         HttpSession session = request.getSession();
         Integer userId = (Integer)session.getAttribute("userId");
-        groupServiceImpl groupService = new groupServiceImpl();
         boolean b = groupService.joinGroup(Integer.parseInt(groupId), userId);
         return JsonUtil.getJson(b);
     }
@@ -33,7 +37,6 @@ public class myGroupController {
         if(userId==null){
             return JsonUtil.getJson(null);
         }else{
-            groupServiceImpl groupService = new groupServiceImpl();
             List<Group> userGroups = groupService.getUserGroups(userId);
             return JsonUtil.getJson(userGroups);
         }
@@ -41,7 +44,6 @@ public class myGroupController {
     @RequestMapping("/leaveGroup")
     public String leaveGroup(HttpSession session,@RequestParam("groupId") String groupId){
         Integer userId = (Integer) session.getAttribute("userId");
-        groupServiceImpl groupService = new groupServiceImpl();
         boolean b = groupService.leaveGroup(Integer.parseInt(groupId), userId);
         return JsonUtil.getJson(b);
     }
@@ -52,8 +54,14 @@ public class myGroupController {
                                    @RequestParam("startTime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date startTime,
                                    @RequestParam("endTime") @DateTimeFormat(pattern = "yyyy-MM-dd") Date endTime,
                                    @RequestParam("eventDescription")String eventDescription){
-        groupServiceImpl groupService = new groupServiceImpl();
         boolean b = groupService.sendGroupMessage(Integer.parseInt(groupId), startTime, endTime, eventName, eventDescription);
+        return JsonUtil.getJson(b);
+    }
+
+    @RequestMapping("/deleteGroupEvent")
+    public String deleteGroupEvent(@RequestParam("groupId")int groupId,
+                                   @RequestParam("eventId")int eventId){
+        boolean b = groupService.deleteGroupEvent(groupId,eventId);
         return JsonUtil.getJson(b);
     }
 }

@@ -4,6 +4,8 @@ import com.hoshino.service.personalSettingService.personalSettingService;
 import com.hoshino.service.personalSettingService.personalSettingServiceImpl;
 import com.hoshino.service.userService.UserServiceImpl;
 import com.hoshino.util.JsonUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +15,14 @@ import java.io.IOException;
 
 @RestController
 public class PersonalSettingController {
+    @Autowired
+    @Qualifier("personalSettingServiceImpl")
+    private personalSettingServiceImpl personalSettingService;
+    @Autowired
+    @Qualifier("userServiceImpl")
+    private UserServiceImpl userService;
+
+
     @PostMapping("/uploadAvatar")
     public String uploadAvatar(HttpSession session,
                                @RequestParam("avatar") MultipartFile avatar) {
@@ -31,7 +41,6 @@ public class PersonalSettingController {
         String finalPath = path + File.separator + userId+"-"+avatar.getOriginalFilename();
         try {
             avatar.transferTo(new File(finalPath));
-            personalSettingServiceImpl personalSettingService = new personalSettingServiceImpl();
             personalSettingService.setAvatar(userId,userId+"-"+avatar.getOriginalFilename());
             return JsonUtil.getJson(true);
         } catch (IOException e) {
@@ -41,7 +50,6 @@ public class PersonalSettingController {
 
     @RequestMapping("/resetPassword")
     public String resetPassword(HttpSession session,@RequestParam("password")String password){
-        UserServiceImpl userService = new UserServiceImpl();
         boolean userId = userService.resetPassword((Integer) session.getAttribute("userId"), password);
         return JsonUtil.getJson(userId);
     }

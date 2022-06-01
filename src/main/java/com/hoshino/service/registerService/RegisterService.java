@@ -4,4 +4,6 @@ import com.hoshino.pojo.User;
 
 public interface RegisterService {
     public boolean registerUser(User user);
+
+    public boolean checkUserName(String userName);
 }

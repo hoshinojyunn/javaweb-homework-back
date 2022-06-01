@@ -3,9 +3,10 @@ package com.hoshino.mapper.UserFriends;
 import com.hoshino.pojo.FriendEvent;
 import com.hoshino.pojo.User;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface UserFriendsMapper {
 
     public List<User> getUserFriendsById(@Param("uid") int id);

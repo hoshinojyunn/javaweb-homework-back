@@ -16,5 +16,5 @@ public interface groupService {
 
     public boolean sendGroupMessage(int groupId, Date startTime, Date endTime, String eventName, String eventDescription);
 
-
+    public boolean deleteGroupEvent(int groupId,int eventId);
 }

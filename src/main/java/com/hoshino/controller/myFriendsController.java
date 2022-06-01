@@ -5,6 +5,8 @@ import com.hoshino.pojo.User;
 import com.hoshino.service.eventService.FriendEventServiceImpl;
 import com.hoshino.util.JsonUtil;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +19,13 @@ import java.util.List;
 
 @RestController
 public class myFriendsController {
+    @Autowired
+    @Qualifier("friendServiceImpl")
+    private friendServiceImpl friendService;
+    @Autowired
+    @Qualifier("friendEventServiceImpl")
+    private FriendEventServiceImpl friendEventService;
+
     @RequestMapping("/addFriend")
     public String addFriend(HttpServletRequest request,
                              @RequestParam("friendId")String friendId){
@@ -25,7 +34,6 @@ public class myFriendsController {
         // 排除自身
         if(userId.equals(Integer.valueOf(friendId)))
             return JsonUtil.getJson(false);
-        friendServiceImpl friendService = new friendServiceImpl();
         boolean b = friendService.addFriend(userId, Integer.parseInt(friendId));
         return JsonUtil.getJson(b);
     }
@@ -33,7 +41,6 @@ public class myFriendsController {
     public String getFriends(HttpServletRequest request){
         HttpSession session = request.getSession();
         Integer userId = (Integer) session.getAttribute("userId");
-        friendServiceImpl friendService = new friendServiceImpl();
 
         List<User> friends = friendService.getFriends(userId);
         return JsonUtil.getJson(friends);
@@ -43,7 +50,6 @@ public class myFriendsController {
                                       @RequestParam("friendId")int to,
                                       @RequestParam("message")String message){
         Integer userId = (Integer)session.getAttribute("userId");
-        FriendEventServiceImpl friendEventService = new FriendEventServiceImpl();
         boolean b = friendEventService.sendFriendEvent(userId, to, message);
         return JsonUtil.getJson(b);
     }
@@ -51,7 +57,6 @@ public class myFriendsController {
     @RequestMapping("/deleteFriend")
     public String deleteFriend(HttpSession session,@RequestParam("friendId")int friendId){
         Integer userId = (Integer) session.getAttribute("userId");
-        friendServiceImpl friendService = new friendServiceImpl();
         // 互删
         boolean b = friendService.deleteFriend(userId, friendId);
         boolean b1 = friendService.deleteFriend(friendId, userId);
