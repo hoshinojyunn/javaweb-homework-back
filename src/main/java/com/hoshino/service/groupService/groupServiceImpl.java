@@ -2,13 +2,9 @@ package com.hoshino.service.groupService;
 
 import com.hoshino.mapper.Group.GroupMapper;
 import com.hoshino.pojo.Group;
-import com.hoshino.service.loginService.LoginServiceImpl;
-import com.hoshino.util.MybatisUtil;
-import org.apache.ibatis.session.SqlSession;
-import org.junit.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
