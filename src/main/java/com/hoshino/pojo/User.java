@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+    public static final String USER_SESSION = "userId";
+
     private int id;
     private String username;
     private String password;

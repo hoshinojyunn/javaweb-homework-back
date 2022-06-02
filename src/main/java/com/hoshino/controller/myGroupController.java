@@ -2,6 +2,7 @@ package com.hoshino.controller;
 
 
 import com.hoshino.pojo.Group;
+import com.hoshino.pojo.User;
 import com.hoshino.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,14 +28,14 @@ public class myGroupController {
     public String joinGroup(HttpServletRequest request,
                             @RequestParam("groupId")String groupId){
         HttpSession session = request.getSession();
-        Integer userId = (Integer)session.getAttribute("userId");
+        Integer userId = (Integer)session.getAttribute(User.USER_SESSION);
         boolean b = groupService.joinGroup(Integer.parseInt(groupId), userId);
         return JsonUtil.getJson(b);
     }
     @RequestMapping("/getGroups")
     public String getGroups(HttpServletRequest request){
         HttpSession session = request.getSession();
-        Integer userId = (Integer)session.getAttribute("userId");
+        Integer userId = (Integer)session.getAttribute(User.USER_SESSION);
         if(userId==null){
             return JsonUtil.getJson(null);
         }else{
@@ -44,7 +45,7 @@ public class myGroupController {
     }
     @RequestMapping("/leaveGroup")
     public String leaveGroup(HttpSession session,@RequestParam("groupId") String groupId){
-        Integer userId = (Integer) session.getAttribute("userId");
+        Integer userId = (Integer) session.getAttribute(User.USER_SESSION);
         boolean b = groupService.leaveGroup(Integer.parseInt(groupId), userId);
         return JsonUtil.getJson(b);
     }

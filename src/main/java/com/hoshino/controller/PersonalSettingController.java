@@ -1,5 +1,6 @@
 package com.hoshino.controller;
 
+import com.hoshino.pojo.User;
 import com.hoshino.service.personalSettingService.personalSettingService;
 
 import com.hoshino.service.userService.UserService;
@@ -28,7 +29,7 @@ public class PersonalSettingController {
     public String uploadAvatar(HttpSession session,
                                @RequestParam("avatar") MultipartFile avatar) {
         System.out.println(session);
-        Integer userId = (Integer) session.getAttribute("userId");
+        Integer userId = (Integer) session.getAttribute(User.USER_SESSION);
         System.out.println(userId);
         System.out.println(avatar.getOriginalFilename());
         // 文件储存包位置
@@ -51,7 +52,7 @@ public class PersonalSettingController {
 
     @RequestMapping("/resetPassword")
     public String resetPassword(HttpSession session,@RequestParam("password")String password){
-        boolean userId = userService.resetPassword((Integer) session.getAttribute("userId"), password);
+        boolean userId = userService.resetPassword((Integer) session.getAttribute(User.USER_SESSION), password);
         return JsonUtil.getJson(userId);
     }
 }

@@ -30,7 +30,7 @@ public class myFriendsController {
     public String addFriend(HttpServletRequest request,
                              @RequestParam("friendId")String friendId){
         HttpSession session = request.getSession();
-        Integer userId = (Integer)session.getAttribute("userId");
+        Integer userId = (Integer)session.getAttribute(User.USER_SESSION);
         // 排除自身
         if(userId.equals(Integer.valueOf(friendId)))
             return JsonUtil.getJson(false);
@@ -40,7 +40,7 @@ public class myFriendsController {
     @RequestMapping(value = "/getFriends")
     public String getFriends(HttpServletRequest request){
         HttpSession session = request.getSession();
-        Integer userId = (Integer) session.getAttribute("userId");
+        Integer userId = (Integer) session.getAttribute(User.USER_SESSION);
 
         List<User> friends = friendService.getFriends(userId);
         return JsonUtil.getJson(friends);
@@ -49,14 +49,14 @@ public class myFriendsController {
     public String sendMessageToFriend(HttpSession session,
                                       @RequestParam("friendId")int to,
                                       @RequestParam("message")String message){
-        Integer userId = (Integer)session.getAttribute("userId");
+        Integer userId = (Integer)session.getAttribute(User.USER_SESSION);
         boolean b = friendEventService.sendFriendEvent(userId, to, message);
         return JsonUtil.getJson(b);
     }
 
     @RequestMapping("/deleteFriend")
     public String deleteFriend(HttpSession session,@RequestParam("friendId")int friendId){
-        Integer userId = (Integer) session.getAttribute("userId");
+        Integer userId = (Integer) session.getAttribute(User.USER_SESSION);
         // 互删
         boolean b = friendService.deleteFriend(userId, friendId);
         boolean b1 = friendService.deleteFriend(friendId, userId);

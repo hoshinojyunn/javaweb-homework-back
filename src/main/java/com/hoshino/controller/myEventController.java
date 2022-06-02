@@ -3,6 +3,7 @@ package com.hoshino.controller;
 
 import com.hoshino.pojo.FriendEvent;
 import com.hoshino.pojo.GroupEvent;
+import com.hoshino.pojo.User;
 import com.hoshino.pojo.UserEvent;
 import com.hoshino.service.eventService.*;
 import com.hoshino.util.JsonUtil;
@@ -38,7 +39,7 @@ public class myEventController {
     public String pushEvent(HttpServletRequest request){
         HttpSession session = request.getSession();
         System.out.println(session);
-        Integer userId = (Integer) session.getAttribute("userId");
+        Integer userId = (Integer) session.getAttribute(User.USER_SESSION);
         if(userId==null){
             System.out.println(userId);
             return JsonUtil.getJson(null);
@@ -58,7 +59,7 @@ public class myEventController {
         startTime.setDate(startTime.getDate()+1);
         endTime.setDate(endTime.getDate()+1);
 
-        Integer userId = (Integer)session.getAttribute("userId");
+        Integer userId = (Integer)session.getAttribute(User.USER_SESSION);
         boolean b = userEventService.addUserEvent(new UserEvent(userId, eventName, startTime, endTime,eventDescription));
         return JsonUtil.getJson(b);
     }
@@ -75,7 +76,7 @@ public class myEventController {
     @RequestMapping("/getFriendMessage")
     public String getFriendMessage(HttpSession session,
                                    @RequestParam("friendId")Integer friendId){
-        Integer userId = (Integer)session.getAttribute("userId");
+        Integer userId = (Integer)session.getAttribute(User.USER_SESSION);
         List<FriendEvent> friendEvent = friendEventService.getFriendEvent(friendId, userId);
         return JsonUtil.getJson(friendEvent);
     }
