@@ -1,8 +1,9 @@
 package com.hoshino.controller;
 
 import com.hoshino.service.personalSettingService.personalSettingService;
-import com.hoshino.service.personalSettingService.personalSettingServiceImpl;
-import com.hoshino.service.userService.UserServiceImpl;
+
+import com.hoshino.service.userService.UserService;
+
 import com.hoshino.util.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,10 +18,10 @@ import java.io.IOException;
 public class PersonalSettingController {
     @Autowired
     @Qualifier("personalSettingServiceImpl")
-    private personalSettingServiceImpl personalSettingService;
+    private personalSettingService personalSettingService;
     @Autowired
     @Qualifier("userServiceImpl")
-    private UserServiceImpl userService;
+    private UserService userService;
 
 
     @PostMapping("/uploadAvatar")

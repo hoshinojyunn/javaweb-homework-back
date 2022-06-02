@@ -22,6 +22,7 @@ public class myGroupController {
     @Autowired
     @Qualifier("groupServiceImpl")
     private groupServiceImpl groupService;
+
     @RequestMapping("/joinGroup")
     public String joinGroup(HttpServletRequest request,
                             @RequestParam("groupId")String groupId){

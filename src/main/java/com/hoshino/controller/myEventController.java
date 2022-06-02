@@ -4,9 +4,7 @@ package com.hoshino.controller;
 import com.hoshino.pojo.FriendEvent;
 import com.hoshino.pojo.GroupEvent;
 import com.hoshino.pojo.UserEvent;
-import com.hoshino.service.eventService.FriendEventServiceImpl;
-import com.hoshino.service.eventService.GroupEventServiceImpl;
-import com.hoshino.service.eventService.UserEventServiceImpl;
+import com.hoshino.service.eventService.*;
 import com.hoshino.util.JsonUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +26,13 @@ import java.util.List;
 public class myEventController {
     @Autowired
     @Qualifier("userEventServiceImpl")
-    private UserEventServiceImpl userEventService;
+    private UserEventService userEventService;
     @Autowired
     @Qualifier("groupEventServiceImpl")
-    private GroupEventServiceImpl groupEventService;
+    private GroupEventService groupEventService;
     @Autowired
     @Qualifier("friendEventServiceImpl")
-    private FriendEventServiceImpl friendEventService;
+    private FriendEventService friendEventService;
 
     @RequestMapping(value = "/myEvent",method = RequestMethod.GET)
     public String pushEvent(HttpServletRequest request){

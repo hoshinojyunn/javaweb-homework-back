@@ -1,36 +1,36 @@
 package com.hoshino.controller;
 
 
-import com.hoshino.mapper.User.UserMapper;
+
 import com.hoshino.pojo.User;
 import com.hoshino.service.personalSettingService.personalSettingServiceImpl;
-import com.hoshino.service.registerService.RegisterServiceImpl;
-import com.hoshino.service.userService.UserServiceImpl;
+import com.hoshino.service.registerService.RegisterService;
+
+import com.hoshino.service.userService.UserService;
+
 import com.hoshino.util.JsonUtil;
-import com.hoshino.util.MybatisUtil;
-import org.apache.ibatis.session.SqlSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpSession;
 
 @RestController
 public class RegisterController {
     @Autowired
     @Qualifier("registerServiceImpl")
-    private RegisterServiceImpl registerService;
+    private RegisterService registerService;
     @Autowired
     @Qualifier("personalSettingServiceImpl")
     private personalSettingServiceImpl personalSettingService;
     @Autowired
     @Qualifier("userServiceImpl")
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @RequestMapping("/checkUserName")
     public String checkUserName(String username){

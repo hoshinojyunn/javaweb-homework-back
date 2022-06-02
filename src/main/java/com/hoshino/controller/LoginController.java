@@ -9,20 +9,28 @@ import com.hoshino.util.JsonUtil;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * <p>此为登录模块的Controller</p>
+ * <p>{@code LoginController}提供了登录检查，一般操作检查以及用户头像获取的API</>
+ * @author hoshino
+ * @version 1.4
+ */
 @RestController
 public class LoginController {
+    /**
+     * {@code loginService}是登录模块的Service层
+     * @see com.hoshino.service.loginService.LoginService
+     */
     @Autowired
+    @Qualifier("loginServiceImpl")
     private LoginService loginService;
-
-    public void setLoginServiceImpl(LoginService loginServiceImpl) {
-        this.loginService = loginServiceImpl;
-    }
 
     @RequestMapping(value = {"/login"},method = RequestMethod.GET)
     public String loginCheck(HttpServletRequest request,
