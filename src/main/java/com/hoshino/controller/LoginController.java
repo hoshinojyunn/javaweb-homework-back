@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
+ * Date: 2022/06/02
  * <p>此为登录模块的Controller</p>
  * <p>{@code LoginController}提供了登录检查，一般操作检查以及用户头像获取的API</p>
- * <strong>登录检查API{@link com.hoshino.controller.LoginController#loginCheck(HttpServletRequest, String, String)}</strong>
+ * <strong>登录检查API{@link com.hoshino.controller.LoginController#loginCheck(HttpServletRequest, User)}</strong>
  * <strong>一般操作检查API{@link com.hoshino.controller.LoginController#check(HttpSession)}</strong>
  * <strong>用户头像获取API{@link com.hoshino.controller.LoginController#getAvatar(HttpSession)}</strong>
  * @author hoshino
@@ -38,21 +39,19 @@ public class LoginController {
     /**
      * <p>此API为项目的登录检查</p>
      * @param request 网页请求
-     * @param username 登录用户名
-     * @param password 登录密码
+     * @param user Type:{@code User} {@link com.hoshino.pojo.User}
      * @return 如果检查正确则返回用户信息，否则返回null
      */
     @RequestMapping(value = {"/login"},method = RequestMethod.GET)
     public String loginCheck(HttpServletRequest request,
-                             @RequestParam("username")String username,
-                             @RequestParam("password")String password) {
+                             User user) {
 
         HttpSession session = request.getSession();
         // 检查登录信息
-        User user = loginService.CheckLoginMessage(username, password);
+        Integer ID = loginService.CheckLoginMessage(user);
 
-        if(user!=null){
-            session.setAttribute(User.USER_SESSION,user.getId());
+        if(ID!=null){
+            session.setAttribute(User.USER_SESSION,ID);
             System.out.println(session);
             return JsonUtil.getJson(user);
         }else{
@@ -84,6 +83,7 @@ public class LoginController {
     @GetMapping("/getAvatar")
     public String getAvatar(HttpSession session){
         Integer userId = (Integer) session.getAttribute(User.USER_SESSION);
+        System.out.println(userId);
         String userAvatarUrl = loginService.getUserAvatarUrl(userId);
         return JsonUtil.getJson(userAvatarUrl);
     }

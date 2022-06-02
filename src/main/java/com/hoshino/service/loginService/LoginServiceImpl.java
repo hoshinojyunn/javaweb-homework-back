@@ -20,12 +20,11 @@ public class LoginServiceImpl implements LoginService{
     }
 
     @Override
-    public User CheckLoginMessage(String username,String password) {
-        User user = userMapper.selectUser(username);
-        if(user!=null&&password.equals(user.getPassword())){
-            return user;
+    public Integer CheckLoginMessage(User user) {
+        User temp = userMapper.selectUser(user.getUsername());
+        if(temp!=null&&temp.getPassword().equals(user.getPassword())){
+            return temp.getId();
         }else{
-
             return null;
         }
     }

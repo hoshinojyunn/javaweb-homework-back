@@ -37,10 +37,12 @@
         allow-credentials="true"/>
     </mvc:cors>
     <!--视图解析器-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+<!--    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+<!--        <property name="prefix" value="/WEB-INF/jsp/"/>-->
+<!--        <property name="suffix" value=".jsp"/>-->
+<!--    </bean>-->
+
+
     <!--spring中bean的获取可通过：1.id 2.class 获取
         配置文件上传解析器，将上传的文件封装为MultipartFile，
         在文件上传过程中，springmvc自动调用该bean完成文件转换为MultipartFile
