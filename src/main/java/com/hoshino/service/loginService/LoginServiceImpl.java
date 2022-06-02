@@ -2,8 +2,6 @@ package com.hoshino.service.loginService;
 
 import com.hoshino.mapper.User.UserMapper;
 import com.hoshino.pojo.User;
-import com.hoshino.util.MybatisUtil;
-import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -34,6 +32,9 @@ public class LoginServiceImpl implements LoginService{
         return userMapper.getUserAvatar(userId);
     }
 
+
+
+    @Deprecated
     public User getUserById(int id){
         return userMapper.getUserById(id);
     }

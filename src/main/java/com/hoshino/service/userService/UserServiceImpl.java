@@ -2,8 +2,6 @@ package com.hoshino.service.userService;
 
 import com.hoshino.mapper.User.UserMapper;
 import com.hoshino.pojo.User;
-import com.hoshino.util.MybatisUtil;
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -4,13 +4,13 @@ package com.hoshino.controller;
 
 import com.hoshino.pojo.User;
 import com.hoshino.service.loginService.LoginService;
-import com.hoshino.service.loginService.LoginServiceImpl;
+
 import com.hoshino.util.JsonUtil;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.ui.ModelMap;
+
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +18,11 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Date: 2022/06/02
- * <p>此为登录模块的Controller</p>
+ * Description: <p>此为登录模块的Controller</p>
  * <p>{@code LoginController}提供了登录检查，一般操作检查以及用户头像获取的API</p>
- * <strong>登录检查API{@link com.hoshino.controller.LoginController#loginCheck(HttpServletRequest, User)}</strong>
- * <strong>一般操作检查API{@link com.hoshino.controller.LoginController#check(HttpSession)}</strong>
- * <strong>用户头像获取API{@link com.hoshino.controller.LoginController#getAvatar(HttpSession)}</strong>
+ * <strong>登录检查API{@link #loginCheck(HttpServletRequest, User)}</strong>
+ * <strong>一般操作检查API{@link #check(HttpSession)}</strong>
+ * <strong>用户头像获取API{@link #getAvatar(HttpSession)}</strong>
  * @author hoshino
  * @version 1.4
  */
@@ -35,6 +35,7 @@ public class LoginController {
     @Autowired
     @Qualifier("loginServiceImpl")
     private LoginService loginService;
+
 
     /**
      * <p>此API为项目的登录检查</p>
@@ -60,6 +61,8 @@ public class LoginController {
         }
     }
 
+
+
     /**
      * <p>此为一般操作检查的API，用户进行一般动作前都会请求此API，以检查用户是否有权限做这些动作</p>
      * @param session 用户session
@@ -74,6 +77,8 @@ public class LoginController {
             return JsonUtil.getJson(false);
         }
     }
+
+
 
     /**
      * 此API返回用户头像在项目下的路径，<code>一般需要在项目路径下添加一个默认头像，否则新注册用户头像无法显示</code>

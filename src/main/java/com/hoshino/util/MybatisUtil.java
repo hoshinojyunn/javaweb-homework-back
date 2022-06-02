@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 import java.io.IOException;
 import java.io.InputStream;
-
+@Deprecated
 public class MybatisUtil {
     private static SqlSessionFactory factory;
     static{
