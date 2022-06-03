@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hoshino.mapper.UserFriends.UserFriendsMapper">
+    <insert id="addFriend">
+        insert into java_web.user_friends (user_id, friend_id, username, friend_name)
+        select u1.id,u2.id,u1.username,u2.username from
+        java_web.user u1,java_web.user u2 where u1.id=#{uid} and u2.id=#{friendId}
+        and not exists(
+            select * from java_web.user_friends
+            where user_friends.user_id=#{uid} and user_friends.friend_id=#{friendId});
+    </insert>
+    <resultMap id="friendMap" type="com.hoshino.pojo.User">
+        <id column="id" property="id"/>
+        <result column="friend_name" property="username"/>
+        <result column="password" property="password"/>
+    </resultMap>
+    <select id="getUserFriendsById" resultMap="friendMap">
+        select u.id,u_f.friend_name,u.password from java_web.user_friends u_f inner join java_web.user u
+        on u_f.friend_id=u.id where u_f.user_id=#{uid};
+    </select>
+    <select id="getFriendEvent" resultType="com.hoshino.pojo.FriendEvent">
+        select * from java_web.friend_event where `to`=#{to} and `from`=#{from};
+    </select>
+
+    <insert id="sendFriendEvent">
+        insert into java_web.friend_event(`from`, `to`, message) VALUES (#{from},#{to},#{message});
+    </insert>
+
+    <delete id="deleteFriend">
+        delete from java_web.user_friends where user_id=#{uid} and friend_id=#{friendId};
+    </delete>
+</mapper>

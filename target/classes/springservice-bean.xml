@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--  登录bean  -->
+    <bean id="loginServiceImpl" class="com.hoshino.service.loginService.LoginServiceImpl">
+        <property name="userMapper" ref="userMapper"/>
+    </bean>
+
+    <!--  群组bean  -->
+    <bean id="groupServiceImpl" class="com.hoshino.service.groupService.groupServiceImpl">
+        <property name="groupMapper" ref="groupMapper"/>
+    </bean>
+    <!--好友bean-->
+    <bean id="friendServiceImpl" class="com.hoshino.service.friendService.friendServiceImpl">
+        <property name="userFriendsMapper" ref="userFriendsMapper"/>
+    </bean>
+    <!--  好友消息bean  -->
+    <bean id="friendEventServiceImpl" class="com.hoshino.service.eventService.FriendEventServiceImpl">
+        <property name="userFriendsMapper" ref="userFriendsMapper"/>
+    </bean>
+    <!-- 群组消息bean-->
+    <bean id="groupEventServiceImpl" class="com.hoshino.service.eventService.GroupEventServiceImpl">
+        <property name="groupMapper" ref="groupMapper"/>
+    </bean>
+
+    <!--  用户事件bean  -->
+    <bean id="userEventServiceImpl" class="com.hoshino.service.eventService.UserEventServiceImpl">
+        <property name="userEventMapper" ref="userEventMapper"/>
+    </bean>
+    <!--  个人设置bean  -->
+    <bean id="personalSettingServiceImpl" class="com.hoshino.service.personalSettingService.personalSettingServiceImpl">
+        <property name="userMapper" ref="userMapper"/>
+    </bean>
+    <!--  注册bean  -->
+    <bean id="registerServiceImpl" class="com.hoshino.service.registerService.RegisterServiceImpl">
+        <property name="userMapper" ref="userMapper"/>
+    </bean>
+
+    <!--  用户服务bean  -->
+    <bean id="userServiceImpl" class="com.hoshino.service.userService.UserServiceImpl">
+        <property name="userMapper" ref="userMapper"/>
+    </bean>
+</beans>
