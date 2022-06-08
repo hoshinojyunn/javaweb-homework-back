@@ -1,0 +1,15 @@
+未命名程序包
+com.hoshino.controller
+com.hoshino.mapper.Group
+com.hoshino.mapper.User
+com.hoshino.mapper.UserEvent
+com.hoshino.mapper.UserFriends
+com.hoshino.pojo
+com.hoshino.service.eventService
+com.hoshino.service.friendService
+com.hoshino.service.groupService
+com.hoshino.service.loginService
+com.hoshino.service.personalSettingService
+com.hoshino.service.registerService
+com.hoshino.service.userService
+com.hoshino.util
